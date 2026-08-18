@@ -1,0 +1,19 @@
+// lib/admission-list-data.ts
+
+import { AdmissionRecord } from "@/types/admission-list-types";
+
+
+export const ADMISSIONS: AdmissionRecord[] = [
+  { admissionId: "ADM240520-0017", admissionDateTime: "20 May 2024, 11:30 AM", uhid: "UHID12345680", patientName: "Amit Kumar", age: 45, gender: "Male", department: "General Medicine", packageName: "General", packageDays: 5, packageRate: 15000, floor: "3rd Floor", roomNo: "302", bedNo: "B-02", status: "Active", expectedDischarge: "25 May 2024" },
+  { admissionId: "ADM240520-0016", admissionDateTime: "20 May 2024, 09:15 AM", uhid: "UHID12345679", patientName: "Sunita Devi", age: 38, gender: "Female", department: "General Surgery", packageName: "Semi Private", packageDays: 3, packageRate: 8000, floor: "2nd Floor", roomNo: "201", bedNo: "A-01", status: "Active", expectedDischarge: "23 May 2024" },
+  { admissionId: "ADM240519-0015", admissionDateTime: "19 May 2024, 08:45 PM", uhid: "UHID12345678", patientName: "Vikram Singh", age: 52, gender: "Male", department: "Cardiology", packageName: "Deluxe", packageDays: 4, packageRate: 20000, floor: "4th Floor", roomNo: "401", bedNo: "D-01", status: "Active", expectedDischarge: "23 May 2024" },
+  { admissionId: "ADM240519-0014", admissionDateTime: "19 May 2024, 04:20 PM", uhid: "UHID12345677", patientName: "Pooja Sharma", age: 29, gender: "Female", department: "Obstetrics & Gynae", packageName: "Private", packageDays: 3, packageRate: 10000, floor: "2nd Floor", roomNo: "205", bedNo: "A-05", status: "Active", expectedDischarge: "22 May 2024" },
+  { admissionId: "ADM240519-0013", admissionDateTime: "19 May 2024, 11:05 AM", uhid: "UHID12345676", patientName: "Ramesh Gupta", age: 60, gender: "Male", department: "Orthopedics", packageName: "General", packageDays: 5, packageRate: 15000, floor: "3rd Floor", roomNo: "305", bedNo: "B-05", status: "Discharged", expectedDischarge: "19 May 2024" },
+  { admissionId: "ADM240518-0012", admissionDateTime: "18 May 2024, 06:30 PM", uhid: "UHID12345675", patientName: "Meena Kapoor", age: 34, gender: "Female", department: "Pediatrics", packageName: "Semi Private", packageDays: 2, packageRate: 8000, floor: "1st Floor", roomNo: "107", bedNo: "A-07", status: "Discharged", expectedDischarge: "18 May 2024" },
+  { admissionId: "ADM240518-0011", admissionDateTime: "18 May 2024, 03:15 PM", uhid: "UHID12345674", patientName: "Mohd. Faizan", age: 41, gender: "Male", department: "ENT", packageName: "Private", packageDays: 3, packageRate: 10000, floor: "2nd Floor", roomNo: "203", bedNo: "A-03", status: "Cancelled", expectedDischarge: "-" },
+  { admissionId: "ADM240518-0010", admissionDateTime: "18 May 2024, 10:10 AM", uhid: "UHID12345673", patientName: "Anjali Verma", age: 28, gender: "Female", department: "Dermatology", packageName: "General", packageDays: 2, packageRate: 15000, floor: "3rd Floor", roomNo: "304", bedNo: "B-04", status: "Cancelled", expectedDischarge: "-" },
+  { admissionId: "ADM240517-0009", admissionDateTime: "17 May 2024, 09:40 PM", uhid: "UHID12345672", patientName: "Suresh Yadav", age: 55, gender: "Male", department: "Neurology", packageName: "Deluxe", packageDays: 5, packageRate: 20000, floor: "4th Floor", roomNo: "402", bedNo: "D-02", status: "Active", expectedDischarge: "22 May 2024" },
+  { admissionId: "ADM240517-0008", admissionDateTime: "17 May 2024, 05:25 PM", uhid: "UHID12345671", patientName: "Neha Saxena", age: 33, gender: "Female", department: "General Medicine", packageName: "Semi Private", packageDays: 3, packageRate: 8000, floor: "2nd Floor", roomNo: "206", bedNo: "A-06", status: "Active", expectedDischarge: "20 May 2024" },
+];
+
+export const DEPARTMENTS = ["General Medicine", "General Surgery", "Cardiology", "Obstetrics & Gynae", "Orthopedics", "Pediatrics", "ENT", "Dermatology", "Neurology"];
