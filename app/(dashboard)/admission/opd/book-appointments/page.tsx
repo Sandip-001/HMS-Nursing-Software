@@ -30,7 +30,6 @@ import { PaymentStep } from "./_components/paymentStep";
 import { SuccessDialog } from "./_components/successDialog";
 import { AyushmanDialog } from "./_components/ayushmanDialog";
 
-
 const blankPatient: PatientProfile = {
   uhid: "",
   firstName: "",
@@ -66,6 +65,9 @@ export default function BookConsultationPage() {
   const [cardNo, setCardNo] = useState("");
   const [lookupState, setLookupState] = useState<"idle" | "loading">("idle");
   const [success, setSuccess] = useState(false);
+  const [generatedAppointmentId, setGeneratedAppointmentId] = useState("");
+  const [generatedUhid, setGeneratedUhid] = useState("");
+
   const followMatches = PATIENTS.filter((p) =>
     [p.uhid, p.firstName, p.lastName, p.mobile]
       .join(" ")
@@ -129,8 +131,24 @@ export default function BookConsultationPage() {
     setStep((s) => Math.min(4, s + 1));
   }
   function submit() {
-    if (!payment || !doctor || !slot || !type)
-      return toast.error("Please choose a payment method");
+    if (!payment || !doctor || !slot || !type) {
+      toast.error("Please choose a payment method");
+      return;
+    }
+
+    const appointmentId = `OPD-${new Date()
+      .toISOString()
+      .slice(0, 10)
+      .replaceAll("-", "")}-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    const uhid =
+      type === "New Registration"
+        ? `UHID${Math.floor(10000000 + Math.random() * 90000000)}`
+        : patient.uhid;
+
+    setGeneratedAppointmentId(appointmentId);
+    setGeneratedUhid(uhid);
+
     setSuccess(true);
   }
   return (
@@ -240,6 +258,8 @@ export default function BookConsultationPage() {
         open={success}
         patient={patient}
         type={type}
+        appointmentId={generatedAppointmentId}
+        generatedUhid={generatedUhid}
         close={() => router.push("/admission/opd/appointments")}
       />
     </div>
