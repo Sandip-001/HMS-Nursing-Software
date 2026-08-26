@@ -53,7 +53,7 @@ export const dummyUsers: DummyUser[] = [
   },
 
   {
-    id: 3,
+    id: 4,
     name: "Sudhuendu Mondal",
     email: "pharmacy@hospital.com",
     password: "123456",
@@ -62,11 +62,38 @@ export const dummyUsers: DummyUser[] = [
   },
 
   {
-    id: 4,
+    id: 5,
     name: "Bhim Bhakta",
     email: "lab@hospital.com",
     password: "123456",
     role: UserRole.LAB,
     avatar: "https://i.pravatar.cc/150?img=63",
-  }
+  },
+
+  {
+    id: 6,
+    name: "Mrinmay Senapati",
+    email: "nurseadmin@hospital.com",
+    password: "123456",
+    role: UserRole.NURSEADMIN,
+    avatar: "https://i.pravatar.cc/150?img=70",
+  },
+
+  {
+    id: 7,
+    name: "Rick Das",
+    email: "billing@hospital.com",
+    password: "123456",
+    role: UserRole.BILLING,
+    avatar: "https://i.pravatar.cc/150?img=65",
+  },
+
+   {
+    id: 8,
+    name: "Souvik Sarkar",
+    email: "rmo@hospital.com",
+    password: "123456",
+    role: UserRole.RMO,
+    avatar: "https://i.pravatar.cc/150?img=63",
+  },
 ];

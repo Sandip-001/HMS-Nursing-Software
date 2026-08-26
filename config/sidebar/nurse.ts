@@ -12,25 +12,9 @@ const nurseSidebar: SidebarItem[] = [
       icon: Activity,
       children: [
         {
-          label: "Patient Arrive In Ward",
-          href: "/nurse/ipd/patient-arrive-in-ward",
+          label: "All Patients",
+          href: "/nurse/ipd/patients",
         },
-        {
-          label: "Bed Occupied",
-          href: "/nurse/ipd/bed-occupied",
-        },
-        {
-          label: "Initial Assessment",
-          href: "/nurse/ipd/initial-assessment",
-        },
-        {
-          label: "Vitals Recording",
-          href: "/nurse/ipd/vital-recording",
-        },
-        {
-          label: "Nursing Assessment",
-          href: "/nurse/ipd/nursing-assessment",
-        }
       ],
     },
 ];

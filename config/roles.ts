@@ -3,7 +3,10 @@ export enum UserRole {
   ADMISSION = "admission",
   NURSE = "nurse", 
   PHARMACY = "pharmacy",
-  LAB = "lab"
+  LAB = "lab",
+  NURSEADMIN = "nurseAdmin",
+  BILLING = "billing",
+  RMO = "rmo"
 }
 
 export const RoleOptions = [
@@ -27,4 +30,16 @@ export const RoleOptions = [
     label: "Lab",
     value: UserRole.LAB,
   },
+  {
+    label: "Nurse Admin",
+    value: UserRole.NURSEADMIN
+  },
+  {
+    label: "Billing",
+    value: UserRole.BILLING
+  },
+  {
+    label: "Rmo",
+    value: UserRole.RMO
+  }
 ];

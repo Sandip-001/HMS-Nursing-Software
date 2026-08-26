@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   SidebarContent,
@@ -21,6 +21,9 @@ import SidebarSubMenu from "./SidebarSubMenu";
 import nurseSidebar from "@/config/sidebar/nurse";
 import pharmacySidebar from "@/config/sidebar/pharmacy";
 import labSidebar from "@/config/sidebar/lab";
+import nurseAdminSidebar from "@/config/sidebar/nurseAdmin";
+import billingSidebar from "@/config/sidebar/billing";
+import rmoSidebar from "@/config/sidebar/rmo";
 
 interface SidebarNavProps {
   role: UserRole;
@@ -35,6 +38,9 @@ export default function SidebarNav({ role }: SidebarNavProps) {
     [UserRole.ADMISSION]: admissionSidebar,
     [UserRole.PHARMACY]:pharmacySidebar,
     [UserRole.LAB]: labSidebar,
+    [UserRole.NURSEADMIN] : nurseAdminSidebar,
+    [UserRole.BILLING] : billingSidebar,
+    [UserRole.RMO] : rmoSidebar,
   };
 
   const menu = sidebarMenus[role] ?? admissionSidebar;
