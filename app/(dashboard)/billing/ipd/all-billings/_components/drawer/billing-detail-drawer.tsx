@@ -28,13 +28,13 @@ export function BillingDetailDrawer({ patient, onClose, onPatientUpdate }: { pat
   const [section, setSection] = useState<SectionKey>("summary");
   const [collecting, setCollecting] = useState(false);
 
+  if (!patient) return null;
   const active = patient;
-  if (!active) return null;
 
   const computed = computeBilling(active);
 
   function handleCollectPayment(payment: PaymentRecord) {
-    const updated: BillingPatient = { ...active, payments: [payment, ...active.payments] };
+    const updated = { ...active, payments: [payment, ...active.payments] } as BillingPatient;
     onPatientUpdate(updated);
     setCollecting(false);
     toast.success(`${formatCurrency(payment.totalAmount)} collected from ${payment.partyName}.`);
