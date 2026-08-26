@@ -97,6 +97,21 @@ const roleVisuals: Record<
     color: "text-cyan-600",
     background: "bg-cyan-50",
   },
+  [UserRole.NURSEADMIN]: {
+    icon: Sparkles,
+    color: "text-cyan-600",
+    background: "bg-cyan-50",
+  },
+  [UserRole.RMO]: {
+    icon: UsersRound,
+    color: "text-cyan-600",
+    background: "bg-cyan-50",
+  },
+  [UserRole.BILLING]: {
+    icon: UsersRound,
+    color: "text-cyan-600",
+    background: "bg-cyan-50",
+  },
 };
 
 export default function LoginForm() {
