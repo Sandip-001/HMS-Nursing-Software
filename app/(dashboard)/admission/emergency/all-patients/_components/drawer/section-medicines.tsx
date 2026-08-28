@@ -186,7 +186,7 @@ export function SectionMedicines({
                                   onUpdateStatus(
                                     dose.id,
                                     dose.medicineName,
-                                    dose.instructions,
+                                    dose.instructions || "",
                                   )
                                 }
                               >

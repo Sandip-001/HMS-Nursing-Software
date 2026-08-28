@@ -60,6 +60,7 @@ export interface MedicineDose {
   givenBy?: string;
   givenAt?: string;
   outOfStockRemark?: string;
+  instructions?: string;  // ← Add this line
 }
 
 export interface PathologyResult {

@@ -54,7 +54,7 @@ export const EMERGENCY_PATIENTS: EmergencyPatient[] = [
     ],
     diagnoses: [{ id: "DG1", name: "Acute Myocardial Infarction", code: "I21.9", type: "Provisional", addedBy: "Dr. Amit Verma", addedAt: "27 Aug 2026, 07:40 AM", notes: "ECG shows ST elevation in leads II, III, aVF." }],
     doses: [
-      { id: "M1", medicineName: "Tab. Aspirin 75mg", medicineCode: "MED-001", strength: "75 mg", route: "Oral", slot: "Immediate", scheduledTime: "07:20 AM", date: "2026-08-27", status: "Given", urgency: "Urgent", deliveredFromPharmacyAt: "27 Aug 2026, 07:18 AM", givenBy: "Nurse Kavita", givenAt: "27 Aug 2026, 07:22 AM" },
+      { id: "M1", medicineName: "Tab. Aspirin 75mg", medicineCode: "MED-001", strength: "75 mg", route: "Oral", slot: "Immediate", scheduledTime: "07:20 AM", date: "2026-08-27", status: "Given", urgency: "Urgent", deliveredFromPharmacyAt: "27 Aug 2026, 07:18 AM", givenBy: "Nurse Kavita", givenAt: "27 Aug 2026, 07:22 AM", instructions: "After meal" },
       { id: "M2", medicineName: "Inj. Tramadol 50mg", medicineCode: "MED-012", strength: "50 mg", route: "IV", slot: "Immediate", scheduledTime: "07:25 AM", date: "2026-08-27", status: "Pending", urgency: "Urgent" },
     ],
     labReports: [
@@ -78,8 +78,8 @@ export const EMERGENCY_PATIENTS: EmergencyPatient[] = [
     attendingDoctor: "Dr. Rahul Mehta", assignedRmo: "Dr. Vivek Rao (RMO)", assignedNurse: "Nurse Anjali", bedOrBay: "ER-Bay-1 (Trauma)",
     allergies: [],
     vitals: [{ id: "V3", date: "2026-08-27", dateTime: "27 Aug 2026, 08:10 AM", bp: "88/56", pulse: 122, respRate: 28, spo2: 90, temp: 97.8, pain: 10, recordedBy: "Nurse Anjali", recordedByRole: "Nurse" }],
-    diagnoses: [{ id: "DG2", name: "Multiple Traumatic Injuries (RTA)", code: "T14.90", type: "Confirmed", addedBy: "Dr. Rahul Mehta", addedAt: "27 Aug 2026, 08:20 AM", notes: "FAST scan positive for free fluid, likely splenic injury. Rushed to OT." }],
-    doses: [{ id: "M3", medicineName: "Inj. Adrenaline 1mg", medicineCode: "MED-013", strength: "1 mg", route: "IV", slot: "Immediate", scheduledTime: "08:12 AM", date: "2026-08-27", status: "Given", urgency: "Urgent", givenBy: "Nurse Anjali", givenAt: "27 Aug 2026, 08:13 AM" }],
+    diagnoses: [{ id: "DG2", name: "Multiple Traumatic Injuries (RTA)", code: "T14.90", type: "Confirmed", addedBy: "Dr. Rahul Mehta", addedAt: "27 Aug 2026, 08:20 AM", notes: "FAST scan positive for free fluid, likely splenic injury. Rushed to OT.",  }],
+    doses: [{ id: "M3", medicineName: "Inj. Adrenaline 1mg", medicineCode: "MED-013", strength: "1 mg", route: "IV", slot: "Immediate", scheduledTime: "08:12 AM", date: "2026-08-27", status: "Given", urgency: "Urgent", givenBy: "Nurse Anjali", givenAt: "27 Aug 2026, 08:13 AM", instructions: "After meal" }],
     labReports: [{ id: "L3", date: "2026-08-27", category: "Radiology", testName: "FAST Abdomen Scan", orderedBy: "Dr. Rahul Mehta", reportedAt: "27 Aug 2026, 08:18 AM", reportImageUrl: "/reports/fast-scan-er.png", notes: "Free fluid in Morrison's pouch, suggestive of splenic injury." }],
     progressNotes: [{ id: "PN2", date: "2026-08-27", title: "Trauma Team Activation", author: "Dr. Rahul Mehta", role: "Doctor", category: "Trauma", createdAt: "27 Aug 2026, 08:15 AM", noteText: "Trauma protocol activated. Surgery team informed, OT prepared for emergency laparotomy." }],
     treatmentPlans: [{ id: "T2", title: "Emergency Laparotomy", description: "Immediate surgical exploration for suspected splenic injury and internal bleeding.", orderedBy: "Dr. Rahul Mehta", orderedByRole: "Doctor", orderedOn: "27 Aug 2026, 08:20 AM", followStatus: "Following" }],
