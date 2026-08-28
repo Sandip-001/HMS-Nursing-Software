@@ -1,5 +1,5 @@
 import { SidebarItem } from "@/types/sidebar";
-import { LayoutDashboard, Activity, Stethoscope } from "lucide-react";
+import { LayoutDashboard, Activity, Stethoscope, Siren } from "lucide-react";
 
 const pharmacySidebar: SidebarItem[] = [
   {
@@ -22,7 +22,17 @@ const pharmacySidebar: SidebarItem[] = [
         },
         
       ],
-    }
+    },
+    {
+      label: "Emergency",
+      icon: Siren,
+      children: [
+        {
+          label: "Orders",
+          href: "/pharmacy/emergency/orders",
+        },
+      ],
+  },
 ];
 
 export default pharmacySidebar;

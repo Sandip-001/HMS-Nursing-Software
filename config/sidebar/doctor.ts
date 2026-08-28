@@ -1,5 +1,5 @@
 import { SidebarItem } from "@/types/sidebar";
-import { LayoutDashboard, Stethoscope, Activity } from "lucide-react";
+import { LayoutDashboard, Stethoscope, Activity, Siren } from "lucide-react";
 
 const doctorSidebar: SidebarItem[] = [
   {
@@ -63,6 +63,17 @@ const doctorSidebar: SidebarItem[] = [
         href: "/doctor/ipd/discharge-decision", 
       },
     ],
+  },
+
+  {
+      label: "Emergency",
+      icon: Siren,
+      children: [
+        {
+          label: "All Patients",
+          href: "/doctor/emergency/all-patients",
+        },
+      ],
   },
 ];
 

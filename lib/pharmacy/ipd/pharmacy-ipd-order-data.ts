@@ -8,7 +8,7 @@ import type {
  * true  -> Pharmacy can collect IPD payment directly (Cash / UPI / Card / Net Banking / split).
  * false -> Pharmacy only delivers medicines; billing is always sent to the IPD Billing Department.
  */
-export const PHARMACY_IPD_DIRECT_PAYMENT_ENABLED = false;
+export const PHARMACY_IPD_DIRECT_PAYMENT_ENABLED = true;
 
 /**
  * Mock of the currently logged-in pharmacy staff member.

@@ -27,7 +27,7 @@ export function RadiologyIpdOrdersList({ orders, onView }: Props) {
           <thead className="bg-slate-50">
             <tr className="text-left text-[10px] uppercase tracking-wide text-slate-500">
               <th className="px-5 py-3">Patient</th>
-              <th className="px-5 py-3">Order / IPD ID</th>
+              <th className="px-5 py-3">Order ID</th>
               <th className="px-5 py-3">Ward / Bed</th>
               <th className="px-5 py-3">Doctor</th>
               <th className="px-5 py-3">Ordered On</th>

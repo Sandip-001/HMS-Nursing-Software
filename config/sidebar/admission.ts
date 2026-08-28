@@ -1,5 +1,5 @@
 import { SidebarItem } from "@/types/sidebar";
-import { LayoutDashboard, UserPlus, ClipboardList, Activity, Stethoscope } from "lucide-react";
+import { LayoutDashboard, UserPlus, ClipboardList, Activity, Stethoscope, Siren } from "lucide-react";
 
 const admissionSidebar: SidebarItem[] = [
   {
@@ -53,6 +53,17 @@ const admissionSidebar: SidebarItem[] = [
         }
       ],
     },
+
+    {
+    label: "Emergency",
+    icon: Siren,
+    children: [
+      {
+        label: "All-patients",
+        href: "/admission/emergency/all-patients",
+      },
+    ],
+  },
 ];
 
 export default admissionSidebar;

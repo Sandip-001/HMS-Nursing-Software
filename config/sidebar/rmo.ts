@@ -1,5 +1,5 @@
 import { SidebarItem } from "@/types/sidebar";
-import { LayoutDashboard, Activity } from "lucide-react";
+import { LayoutDashboard, Activity, Siren } from "lucide-react";
 
 const rmoSidebar: SidebarItem[] = [
   {
@@ -14,6 +14,16 @@ const rmoSidebar: SidebarItem[] = [
         {
           label: "All Patients",
           href: "/rmo/ipd/all-patients",
+        },
+      ],
+    },
+    {
+      label: "Emergency",
+      icon: Siren,
+      children: [
+        {
+          label: "All Patients",
+          href: "/rmo/emergency/all-patients",
         },
       ],
     },

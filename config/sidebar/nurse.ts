@@ -1,5 +1,5 @@
 import { SidebarItem } from "@/types/sidebar";
-import { LayoutDashboard, Activity } from "lucide-react";
+import { LayoutDashboard, Activity, Siren } from "lucide-react";
 
 const nurseSidebar: SidebarItem[] = [
   {
@@ -17,6 +17,16 @@ const nurseSidebar: SidebarItem[] = [
         },
       ],
     },
+     {
+      label: "Emergency",
+      icon: Siren,
+      children: [
+        {
+          label: "All Patients",
+          href: "/nurse/emergency/all-patients",
+        },
+      ],
+  },
 ];
 
 export default nurseSidebar;

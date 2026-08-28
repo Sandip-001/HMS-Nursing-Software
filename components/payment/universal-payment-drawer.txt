@@ -1,0 +1,294 @@
+// components/shared/payment/universal-payment-drawer.tsx
+"use client";
+import { useMemo, useState } from "react";
+import { toast } from "sonner";
+import {
+  Banknote, Building2, CheckCircle2, CreditCard, HeartHandshake, Landmark, Plus, QrCode, Receipt,
+  ShieldCheck, TicketPercent, Trash2, Wallet, X,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import type {
+  CoverageType, UniversalCoverageDetails, UniversalPaymentContext, UniversalPaymentMethod,
+  UniversalPaymentMethodEntry, UniversalPaymentSubmission,
+} from "@/types/emergency/universal-payment-types";
+
+const METHOD_META: Record<UniversalPaymentMethod, { icon: React.ElementType; tone: string }> = {
+  Cash: { icon: Banknote, tone: "text-emerald-600 bg-emerald-50 border-emerald-200" },
+  Card: { icon: CreditCard, tone: "text-blue-600 bg-blue-50 border-blue-200" },
+  UPI: { icon: QrCode, tone: "text-violet-600 bg-violet-50 border-violet-200" },
+  "Net Banking": { icon: Landmark, tone: "text-cyan-600 bg-cyan-50 border-cyan-200" },
+  Cheque: { icon: Receipt, tone: "text-amber-600 bg-amber-50 border-amber-200" },
+  Insurance: { icon: ShieldCheck, tone: "text-rose-600 bg-rose-50 border-rose-200" },
+  "Government Scheme": { icon: HeartHandshake, tone: "text-teal-600 bg-teal-50 border-teal-200" },
+};
+
+const ALL_METHODS: UniversalPaymentMethod[] = ["Cash", "Card", "UPI", "Net Banking", "Cheque", "Insurance", "Government Scheme"];
+const COVERAGE_TYPES: CoverageType[] = ["None", "Insurance", "Ayushman Bharat", "CGHS", "ESI", "Corporate Tie-up"];
+
+function formatCurrency(value: number) {
+  return `₹${value.toLocaleString("en-IN", { maximumFractionDigits: 2 })}`;
+}
+
+export function UniversalPaymentDrawer({
+  open,
+  context,
+  onClose,
+  onSubmit,
+}: {
+  open: boolean;
+  context: UniversalPaymentContext | null;
+  onClose: () => void;
+  onSubmit: (submission: UniversalPaymentSubmission) => void;
+}) {
+  const [methodRows, setMethodRows] = useState<UniversalPaymentMethodEntry[]>([{ method: "Cash", amount: 0 }]);
+  const [discountPercentage, setDiscountPercentage] = useState("");
+  const [discountReason, setDiscountReason] = useState("");
+  const [coverageType, setCoverageType] = useState<CoverageType>(context?.existingCoverage?.type ?? "None");
+  const [coverageScheme, setCoverageScheme] = useState(context?.existingCoverage?.schemeName ?? "");
+  const [coveragePolicy, setCoveragePolicy] = useState(context?.existingCoverage?.policyOrCardNumber ?? "");
+  const [coverageApproved, setCoverageApproved] = useState(context?.existingCoverage?.approvedAmount ? String(context.existingCoverage.approvedAmount) : "");
+  const [remarks, setRemarks] = useState("");
+
+  const discountAmount = useMemo(() => {
+    if (!context) return 0;
+    const pct = Number(discountPercentage) || 0;
+    return Math.round((context.dueAmount * pct) / 100);
+  }, [discountPercentage, context]);
+
+  const payableAfterDiscount = useMemo(() => {
+    if (!context) return 0;
+    return Math.max(0, context.dueAmount - discountAmount);
+  }, [context, discountAmount]);
+
+  const totalEntered = useMemo(() => methodRows.reduce((sum, row) => sum + (Number(row.amount) || 0), 0), [methodRows]);
+  const remainingToAllocate = payableAfterDiscount - totalEntered;
+
+  if (!open || !context) return null;
+
+  function addMethodRow() {
+    const unused = ALL_METHODS.find((m) => !methodRows.some((r) => r.method === m)) ?? "Cash";
+    setMethodRows((v) => [...v, { method: unused, amount: 0 }]);
+  }
+
+  function updateRow(index: number, patch: Partial<UniversalPaymentMethodEntry>) {
+    setMethodRows((v) => v.map((row, i) => (i === index ? { ...row, ...patch } : row)));
+  }
+
+  function removeRow(index: number) {
+    setMethodRows((v) => v.filter((_, i) => i !== index));
+  }
+
+  function handleSubmit() {
+    if (totalEntered <= 0) {
+      toast.error("Enter at least one payment amount.");
+      return;
+    }
+    if (totalEntered > payableAfterDiscount) {
+      toast.error(`Total entered (${formatCurrency(totalEntered)}) exceeds payable amount (${formatCurrency(payableAfterDiscount)}).`);
+      return;
+    }
+
+    const submission: UniversalPaymentSubmission = {
+      methods: methodRows.filter((r) => r.amount > 0),
+      totalCollected: totalEntered,
+      receivedBy: context.currentStaffName,
+      receivedOn: new Date().toLocaleString("en-IN", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }),
+      remarks: remarks || undefined,
+      discount: discountAmount > 0 ? {
+        percentage: Number(discountPercentage) || 0,
+        amount: discountAmount,
+        reason: discountReason || undefined,
+        givenBy: context.currentStaffName ,
+        givenByRole: context.currentStaffRole,
+      } : undefined,
+      coverage: coverageType !== "None" ? {
+        type: coverageType,
+        schemeName: coverageScheme || undefined,
+        policyOrCardNumber: coveragePolicy || undefined,
+        approvedAmount: coverageApproved ? Number(coverageApproved) : undefined,
+      } : undefined,
+    };
+
+    onSubmit(submission);
+    toast.success(`${formatCurrency(totalEntered)} collected from ${context.patientName}.`);
+  }
+
+  return (
+    <div className="fixed inset-0 z-[90]">
+      <div className="absolute inset-0 bg-slate-950/40" onClick={onClose} />
+      <aside className="absolute right-0 top-0 flex h-full w-full max-w-2xl flex-col overflow-hidden bg-[#f7f9fc] shadow-2xl">
+        <header className="flex items-center justify-between border-b border-slate-200 bg-white px-5 py-4">
+          <div>
+            <p className="flex items-center gap-2 text-lg font-bold text-slate-800"><Wallet className="h-5 w-5 text-emerald-600" />{context.title}</p>
+            <p className="text-xs text-slate-500">{context.subtitle} · {context.patientName} · {context.uhid} · Bill {context.billNumber}</p>
+          </div>
+          <Button variant="outline" size="icon" onClick={onClose}><X className="h-5 w-5" /></Button>
+        </header>
+
+        <div className="flex-1 overflow-y-auto p-5 space-y-5">
+          {/* Bill summary */}
+          <div className="grid grid-cols-3 gap-3">
+            <SummaryTile label="Gross Amount" value={formatCurrency(context.grossAmount)} tone="slate" />
+            <SummaryTile label="Already Paid" value={formatCurrency(context.alreadyPaid)} tone="emerald" />
+            <SummaryTile label="Balance Due" value={formatCurrency(context.dueAmount)} tone="rose" />
+          </div>
+
+          {/* Payment history */}
+          {context.paymentHistory && context.paymentHistory.length > 0 && (
+            <div className="rounded-2xl border border-slate-200 bg-white p-4">
+              <p className="mb-3 flex items-center gap-2 text-sm font-bold text-slate-800"><Receipt className="h-4 w-4 text-slate-500" />Payment History</p>
+              <div className="space-y-2">
+                {context.paymentHistory.map((p) => (
+                  <div key={p.id} className="flex items-center justify-between rounded-lg border border-slate-100 bg-slate-50/60 p-3 text-sm">
+                    <div>
+                      <p className="font-semibold text-slate-700">{formatCurrency(p.totalAmount)} · {p.methods.map((m) => m.method).join(" + ")}</p>
+                      <p className="text-xs text-slate-400">{p.receivedOn} · Received by {p.receivedBy}</p>
+                    </div>
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Coverage details */}
+          <div className="rounded-2xl border border-teal-200 bg-teal-50/40 p-4">
+            <p className="mb-3 flex items-center gap-2 text-sm font-bold text-teal-900"><HeartHandshake className="h-4 w-4" />Coverage / Scheme Details</p>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label className="text-xs text-slate-500">Coverage Type</Label>
+                <Select value={coverageType} onValueChange={(v) => setCoverageType(v as CoverageType)}>
+                  <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
+                  <SelectContent>{COVERAGE_TYPES.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
+                </Select>
+              </div>
+              {coverageType !== "None" && (
+                <>
+                  <div>
+                    <Label className="text-xs text-slate-500">Scheme Name</Label>
+                    <Input className="mt-1" value={coverageScheme} onChange={(e) => setCoverageScheme(e.target.value)} placeholder="e.g. PM-JAY, Star Health" />
+                  </div>
+                  <div>
+                    <Label className="text-xs text-slate-500">Policy / Card Number</Label>
+                    <Input className="mt-1" value={coveragePolicy} onChange={(e) => setCoveragePolicy(e.target.value)} placeholder="Policy or card number" />
+                  </div>
+                  <div>
+                    <Label className="text-xs text-slate-500">Approved Amount</Label>
+                    <Input className="mt-1" type="number" value={coverageApproved} onChange={(e) => setCoverageApproved(e.target.value)} placeholder="0" />
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Discount */}
+          <div className="rounded-2xl border border-amber-200 bg-amber-50/40 p-4">
+            <p className="mb-3 flex items-center gap-2 text-sm font-bold text-amber-900"><TicketPercent className="h-4 w-4" />Apply Discount (Optional)</p>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label className="text-xs text-slate-500">Discount Percentage</Label>
+                <Input className="mt-1" type="number" value={discountPercentage} onChange={(e) => setDiscountPercentage(e.target.value)} placeholder="0" />
+              </div>
+              <div>
+                <Label className="text-xs text-slate-500">Discount Amount</Label>
+                <Input className="mt-1 bg-slate-50" readOnly value={discountAmount ? formatCurrency(discountAmount) : "₹0"} />
+              </div>
+              <div className="col-span-2">
+                <Label className="text-xs text-slate-500">Reason (Optional)</Label>
+                <Textarea className="mt-1" value={discountReason} onChange={(e) => setDiscountReason(e.target.value)} placeholder="Reason for discount" rows={2} />
+              </div>
+              <div className="col-span-2">
+                <Label className="text-xs text-slate-500">Discount Given By</Label>
+                <Input className="mt-1 bg-slate-50" readOnly value={`${context.currentStaffName} (${context.currentStaffRole})`} />
+              </div>
+            </div>
+            {discountAmount > 0 && (
+              <p className="mt-3 text-sm font-semibold text-amber-800">Payable after discount: {formatCurrency(payableAfterDiscount)}</p>
+            )}
+          </div>
+
+          {/* Payment methods */}
+          <div className="rounded-2xl border border-slate-200 bg-white p-4">
+            <div className="mb-3 flex items-center justify-between">
+              <p className="flex items-center gap-2 text-sm font-bold text-slate-800"><Wallet className="h-4 w-4 text-emerald-600" />Payment Methods</p>
+              <Button size="sm" variant="outline" className="gap-1" onClick={addMethodRow}><Plus className="h-3.5 w-3.5" />Add Method</Button>
+            </div>
+            <div className="space-y-3">
+              {methodRows.map((row, index) => {
+                const Meta = METHOD_META[row.method];
+                const Icon = Meta.icon;
+                return (
+                  <div key={index} className={`flex items-center gap-3 rounded-xl border p-3 ${Meta.tone}`}>
+                    <Icon className="h-5 w-5 shrink-0" />
+                    <Select value={row.method} onValueChange={(v) => updateRow(index, { method: v as UniversalPaymentMethod })}>
+                      <SelectTrigger className="w-40 bg-white"><SelectValue /></SelectTrigger>
+                      <SelectContent>{ALL_METHODS.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}</SelectContent>
+                    </Select>
+                    <Input
+                      type="number"
+                      value={row.amount || ""}
+                      onChange={(e) => updateRow(index, { amount: Number(e.target.value) || 0 })}
+                      placeholder="Amount"
+                      className="flex-1 bg-white"
+                    />
+                    {(row.method === "Card" || row.method === "UPI" || row.method === "Net Banking" || row.method === "Cheque") && (
+                      <Input
+                        value={row.reference || ""}
+                        onChange={(e) => updateRow(index, { reference: e.target.value })}
+                        placeholder="Reference / Txn ID"
+                        className="w-40 bg-white"
+                      />
+                    )}
+                    {methodRows.length > 1 && (
+                      <button type="button" onClick={() => removeRow(index)} className="text-red-500"><Trash2 className="h-4 w-4" /></button>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+            <div className="mt-3 flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2 text-sm">
+              <span className="text-slate-500">Total Entered</span>
+              <span className="font-bold text-slate-800">{formatCurrency(totalEntered)}</span>
+            </div>
+            {remainingToAllocate !== 0 && (
+              <p className={`mt-2 text-xs font-semibold ${remainingToAllocate > 0 ? "text-amber-600" : "text-red-600"}`}>
+                {remainingToAllocate > 0 ? `${formatCurrency(remainingToAllocate)} remaining to allocate` : `${formatCurrency(Math.abs(remainingToAllocate))} over the payable amount`}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <Label className="text-xs text-slate-500">Remarks (Optional)</Label>
+            <Textarea className="mt-1" value={remarks} onChange={(e) => setRemarks(e.target.value)} placeholder="Any additional notes" rows={2} />
+          </div>
+        </div>
+
+        <footer className="border-t border-slate-200 bg-white p-5">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <p className="text-[10px] uppercase text-slate-400">Collected By</p>
+              <p className="text-sm font-bold text-slate-800">{context.currentStaffName} ({context.currentStaffRole})</p>
+            </div>
+            <Button className="gap-2 bg-emerald-600 hover:bg-emerald-700" onClick={handleSubmit}>
+              <Banknote className="h-4 w-4" />Collect {formatCurrency(totalEntered)}
+            </Button>
+          </div>
+        </footer>
+      </aside>
+    </div>
+  );
+}
+
+function SummaryTile({ label, value, tone }: { label: string; value: string; tone: "slate" | "emerald" | "rose" }) {
+  const toneMap = { slate: "border-slate-200 bg-slate-50 text-slate-800", emerald: "border-emerald-200 bg-emerald-50 text-emerald-800", rose: "border-rose-200 bg-rose-50 text-rose-800" };
+  return (
+    <div className={`rounded-xl border p-3 ${toneMap[tone]}`}>
+      <p className="text-[10px] uppercase opacity-70">{label}</p>
+      <p className="mt-1 text-base font-bold">{value}</p>
+    </div>
+  );
+}

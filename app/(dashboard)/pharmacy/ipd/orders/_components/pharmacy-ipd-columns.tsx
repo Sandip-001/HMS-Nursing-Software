@@ -29,9 +29,9 @@ export function getPharmacyIpdColumns(onView: (order: PharmacyIpdOrder) => void)
       ),
     },
     {
-      id: "Order / IPD ID",
+      id: "Order ID",
       accessorKey: "id",
-      header: "Order / IPD ID",
+      header: "Order ID",
       cell: ({ row }) => (
         <div>
           <p className="text-sm font-medium text-slate-700">{row.original.id}</p>

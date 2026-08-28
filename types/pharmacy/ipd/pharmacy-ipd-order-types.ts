@@ -3,7 +3,9 @@ export type PharmacyIpdOrderStatus =
   | "Course Completed"
   | "Payment Received"
   | "Partially Paid"
-  | "Billed to Department";
+  | "Billed to Department"
+  | "Partially Delivered"
+  | "All Delivered"
 
 export type MedicineUrgency = "Urgent" | "Routine";
 export type PharmacyPaymentMethod = "Cash" | "UPI" | "Card" | "Net Banking";
