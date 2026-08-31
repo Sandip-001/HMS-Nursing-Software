@@ -23,13 +23,14 @@ import { TabProgressNotes } from "../../../ipd/patients/[uhid]/_components/tab-p
 import { TabFluidBalance } from "../../../ipd/patients/[uhid]/_components/tab-fluid-balance";
 import { TabTreatmentPlan } from "../../../ipd/patients/[uhid]/_components/tab-treatment-plan";
 import { TabShiftHandover } from "../../../ipd/patients/[uhid]/_components/tab-shift-handover";
-import { TabDischarge } from "../../../ipd/patients/[uhid]/_components/tab-discharge";
+
 import { PatientHeader } from "../../../ipd/patients/[uhid]/_components/patient-header";
 import { TabVentilation } from "./_components/tab-ventilation";
 import { TabOxygenTherapy } from "./_components/tab-oxygen-therapy";
 import { CURRENT_NURSE } from "@/lib/nurse/icu/nurse-icu-data";
 import { getActiveVentilatorAdministration, getActiveVentilatorOrder, getVentilatorObservations, getVentilatorOrderHistory } from "@/lib/nurse/icu/ventilation-data";
 import { VentilatorAdministration, VentilatorObservation } from "@/types/nurse/icu/ventilation-types";
+import { TabDischarge } from "../../../ipd/patients/[uhid]/_components/tab-discharge";
 
 export default function NurseIcuPatientDetailPage() {
     const router = useRouter();
