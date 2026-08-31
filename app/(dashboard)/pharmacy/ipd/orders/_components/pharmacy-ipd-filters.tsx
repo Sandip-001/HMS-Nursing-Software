@@ -9,13 +9,14 @@ import type { PharmacyIpdOrderFilters } from "@/types/pharmacy/ipd/pharmacy-ipd-
 interface Props {
   filters: PharmacyIpdOrderFilters;
   results: number;
+  name: string;
   doctors: string[];
   wards: string[];
   onChange: <K extends keyof PharmacyIpdOrderFilters>(key: K, value: PharmacyIpdOrderFilters[K]) => void;
   onReset: () => void;
 }
 
-export function PharmacyIpdFilters({ filters, results, doctors, wards, onChange, onReset }: Props) {
+export function PharmacyIpdFilters({ filters, results, doctors, wards, onChange, onReset, name }: Props) {
   const active = Boolean(filters.search || filters.date || filters.doctor || filters.ward || filters.status !== "All" || filters.paymentStatus !== "All");
   return (
     <Card className="overflow-hidden border-slate-200 shadow-sm">
@@ -23,7 +24,7 @@ export function PharmacyIpdFilters({ filters, results, doctors, wards, onChange,
         <div className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100 text-blue-600"><SlidersHorizontal className="h-4 w-4" /></div>
           <div>
-            <p className="text-sm font-bold text-slate-800">Search & Filter IPD Pharmacy Orders</p>
+            <p className="text-sm font-bold text-slate-800">Search & Filter {name} Pharmacy Orders</p>
             <p className="text-xs text-slate-500">Filter by patient, ward, doctor, order status, or payment status.</p>
           </div>
         </div>
@@ -36,7 +37,7 @@ export function PharmacyIpdFilters({ filters, results, doctors, wards, onChange,
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-6">
           <div className="relative xl:col-span-2">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-            <Input className="h-10 pl-9" value={filters.search} onChange={(event) => onChange("search", event.target.value)} placeholder="Patient, UHID, IPD ID, ward or bed..." />
+            <Input className="h-10 pl-9" value={filters.search} onChange={(event) => onChange("search", event.target.value)} placeholder={`Patient Name, UHID, ${name} ID, ward or bed...`} />
           </div>
           <Filter label="Doctor" value={filters.doctor} items={["All", ...doctors]} onChange={(value) => onChange("doctor", value)} />
           <Filter label="Ward" value={filters.ward} items={["All", ...wards]} onChange={(value) => onChange("ward", value)} />

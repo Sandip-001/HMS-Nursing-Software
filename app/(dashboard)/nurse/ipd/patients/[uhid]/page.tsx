@@ -1,7 +1,7 @@
 // app/(dashboard)/nurse/ipd/patients/[uhid]/page.tsx
 "use client";
 import { useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type {
@@ -22,6 +22,7 @@ import { TabShiftHandover } from "./_components/tab-shift-handover";
 import { TabDischarge } from "./_components/tab-discharge";
 
 export default function NursePatientDetailPage() {
+  const router = useRouter()
   const params = useParams();
   const uhid = params.uhid as string;
   const patient = getNursePatientByUhid(uhid);
@@ -66,7 +67,7 @@ export default function NursePatientDetailPage() {
   return (
     <div className="min-h-screen">
       <div className="mx-auto max-w-[1400px] space-y-5">
-        <PatientHeader patient={patient} />
+        <PatientHeader patient={patient} name={"IPD ID"} handleClick={() => router.push("/nurse/ipd/patients")} />
 
         <Tabs value={tab} onValueChange={setTab}>
           <TabsList className="w-full justify-start overflow-x-auto rounded-none border-b border-slate-200 bg-transparent p-0">

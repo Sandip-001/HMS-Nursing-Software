@@ -1,5 +1,5 @@
 import { SidebarItem } from "@/types/sidebar";
-import { LayoutDashboard, Activity, Siren } from "lucide-react";
+import { LayoutDashboard, Activity, Siren, DiamondPlus } from "lucide-react";
 
 const rmoSidebar: SidebarItem[] = [
   {
@@ -27,6 +27,16 @@ const rmoSidebar: SidebarItem[] = [
         },
       ],
     },
+    {
+    label: "ICU",
+    icon: DiamondPlus,
+    children: [
+      {
+        label: "All Patients",
+        href: "/rmo/icu/all-patients",
+      },
+    ],
+  },
 ];
 
 export default rmoSidebar;

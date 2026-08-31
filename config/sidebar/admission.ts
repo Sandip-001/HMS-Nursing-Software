@@ -1,5 +1,5 @@
 import { SidebarItem } from "@/types/sidebar";
-import { LayoutDashboard, UserPlus, ClipboardList, Activity, Stethoscope, Siren } from "lucide-react";
+import { LayoutDashboard, UserPlus, ClipboardList, Activity, Stethoscope, Siren, DiamondPlus } from "lucide-react";
 
 const admissionSidebar: SidebarItem[] = [
   {
@@ -28,29 +28,21 @@ const admissionSidebar: SidebarItem[] = [
       icon: Activity,
       children: [
         {
-          label: "New Admission",
-          href: "/admission/ipd/new-admission",
-        },
-        {
-          label: "Admission List",
-          href: "/admission/ipd/admission-list",
+          label: "All Patients",
+          href: "/admission/ipd/all-patients",
         },
         {
           label: "Pending Admissions",
           href: "/admission/ipd/pending-admissions",
         },
         {
+          label: "Department Requests",
+          href: "/admission/ipd/department-requests",
+        },
+        {
           label: "Bed Availability",
           href: "/admission/ipd/bed-availability",
         },
-        {
-          label: "Admission Requests",
-          href: "/admission/ipd/admission-requests",
-        },
-        {
-          label: "Cancelled Admissions",
-          href: "/admission/ipd/cancelled-admissions",
-        }
       ],
     },
 
@@ -61,6 +53,17 @@ const admissionSidebar: SidebarItem[] = [
       {
         label: "All-patients",
         href: "/admission/emergency/all-patients",
+      },
+    ],
+  },
+
+  {
+    label: "ICU",
+    icon: DiamondPlus,
+    children: [
+      {
+        label: "All-patients",
+        href: "/admission/icu/all-patients",
       },
     ],
   },

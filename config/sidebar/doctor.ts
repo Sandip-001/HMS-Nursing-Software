@@ -1,5 +1,5 @@
 import { SidebarItem } from "@/types/sidebar";
-import { LayoutDashboard, Stethoscope, Activity, Siren } from "lucide-react";
+import { LayoutDashboard, Stethoscope, Activity, Siren, DiamondPlus } from "lucide-react";
 
 const doctorSidebar: SidebarItem[] = [
   {
@@ -74,6 +74,17 @@ const doctorSidebar: SidebarItem[] = [
           href: "/doctor/emergency/all-patients",
         },
       ],
+  },
+
+  {
+    label: "ICU",
+    icon: DiamondPlus,
+    children: [
+      {
+        label: "All Patients",
+        href: "/doctor/icu/all-patients",
+      },
+    ],
   },
 ];
 

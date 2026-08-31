@@ -7,13 +7,13 @@ import { useRouter } from "next/navigation";
 import type { NurseIpdPatient } from "@/types/nurse/ipd/nurse-ipd-types";
 import { AcuityBadge } from "../../_components/nurse-ipd-badges";
 
-export function PatientHeader({ patient }: { patient: NurseIpdPatient }) {
+export function PatientHeader({ patient, name, handleClick }: { patient: NurseIpdPatient, name:string, handleClick:()=> void }) {
   const router = useRouter();
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div className="flex items-start gap-3">
-          <Button variant="outline" size="icon" onClick={() => router.push("/nurse/ipd/patients")} className="shrink-0"><ArrowLeft className="h-4 w-4" /></Button>
+          <Button variant="outline" size="icon" onClick={handleClick} className="shrink-0"><ArrowLeft className="h-4 w-4" /></Button>
           <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 text-lg font-bold text-white shadow-md">
             {patient.patientName.charAt(0)}
           </div>
@@ -26,7 +26,7 @@ export function PatientHeader({ patient }: { patient: NurseIpdPatient }) {
               )}
             </div>
             <p className="mt-1 text-sm text-slate-600">{patient.age} years · {patient.gender} · Blood Group <span className="font-semibold">{patient.bloodGroup}</span></p>
-            <p className="mt-1 text-xs text-slate-500">UHID: {patient.uhid} · IPD: {patient.ipdId} · {patient.ward} / {patient.room} / {patient.bed}</p>
+            <p className="mt-1 text-xs text-slate-500">UHID: {patient.uhid} · {name}: {patient.ipdId} · {patient.ward} / {patient.room} / {patient.bed}</p>
           </div>
         </div>
 

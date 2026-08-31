@@ -23,6 +23,10 @@ const labSidebar: SidebarItem[] = [
       {
         label: "Emergency-Orders",
         href: "/lab/pathology/emergency-orders",
+      },
+      {
+        label: "ICU-Orders",
+        href: "/lab/pathology/icu-orders",
       }
     ],
   },
@@ -42,6 +46,10 @@ const labSidebar: SidebarItem[] = [
       {
         label: "Emergency-Orders",
         href: "/lab/radiology/emergency-orders",
+      },
+      {
+        label: "ICU-Orders",
+        href: "/lab/radiology/icu-orders",
       }
     ],
   },

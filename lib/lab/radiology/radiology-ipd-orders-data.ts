@@ -6,7 +6,7 @@ import type { RadiologyIpdOrder } from "@/types/lab/radiology/radiology-ipd-type
  * true: Radiology can collect IPD payment directly.
  * false: All IPD radiology bills are sent to IPD Billing Department.
  */
-export const RADIOLOGY_IPD_DIRECT_PAYMENT_ENABLED = true;
+export const RADIOLOGY_IPD_DIRECT_PAYMENT_ENABLED = false;
 
 export const RADIOLOGY_IPD_ORDERS: RadiologyIpdOrder[] = [
   {

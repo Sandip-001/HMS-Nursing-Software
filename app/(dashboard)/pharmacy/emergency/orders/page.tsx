@@ -193,7 +193,7 @@ export default function PharmacyIpdOrdersPage() {
           <PharmacyIpdStat icon={<AlertTriangle className="h-5 w-5" />} label="Urgent Orders" value={String(stats.urgentOrders)} subtitle="Contain at least one urgent medicine" tone="rose" />
         </div>
 
-        <PharmacyIpdFilters filters={filters} results={filteredOrders.length} doctors={PHARMACY_IPD_DOCTORS} wards={PHARMACY_IPD_WARDS} onChange={updateFilter} onReset={() => setFilters(initialFilters)} />
+        <PharmacyIpdFilters name="Emergency" filters={filters} results={filteredOrders.length} doctors={PHARMACY_IPD_DOCTORS} wards={PHARMACY_IPD_WARDS} onChange={updateFilter} onReset={() => setFilters(initialFilters)} />
 
        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
   <p className="min-w-0 shrink text-sm text-slate-500">
