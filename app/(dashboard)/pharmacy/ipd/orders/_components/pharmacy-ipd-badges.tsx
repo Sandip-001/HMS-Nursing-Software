@@ -20,6 +20,8 @@ export function OrderStatusBadge({ status }: { status: PharmacyIpdOrderStatus })
     "Payment Received": "border-emerald-200 bg-emerald-50 text-emerald-700",
     "Partially Paid": "border-amber-200 bg-amber-50 text-amber-700",
     "Billed to Department": "border-violet-200 bg-violet-50 text-violet-700",
+    "Partially Delivered": "border-amber-200 bg-amber-50 text-amber-700",
+    "All Delivered": "border-emerald-200 bg-emerald-50 text-emerald-700",
   };
   return <Badge variant="outline" className={styles[status]}>{status}</Badge>;
 }
